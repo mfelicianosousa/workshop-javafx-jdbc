@@ -3,10 +3,9 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Department implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Department implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	
@@ -34,6 +33,13 @@ public class Department implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Department [id=" + id + ", name=" + name + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -51,10 +57,4 @@ public class Department implements Serializable {
 		Department other = (Department) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", name=" + name + "]";
-	}
-	
 }
