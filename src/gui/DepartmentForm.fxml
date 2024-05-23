@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="180.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="180.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentFormController">
    <children>
       <GridPane layoutY="19.0" prefHeight="186.0" prefWidth="861.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="19.0">
         <columnConstraints>
@@ -33,23 +33,23 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Label>
-            <TextField alignment="CENTER_RIGHT" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <TextField fx:id="txtId" alignment="CENTER_RIGHT" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblErrorName" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <HBox prefHeight="40.0" prefWidth="413.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Save">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onBtnSaveAction" prefHeight="40.0" prefWidth="110.0" text="Save">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Cancel">
+                  <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onBtnCancelAction" prefHeight="40.0" prefWidth="110.0" text="Cancel">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin></Button>
