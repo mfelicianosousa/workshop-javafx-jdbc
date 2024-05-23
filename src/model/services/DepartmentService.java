@@ -36,4 +36,10 @@ public class DepartmentService {
 			dao.update(entity);
 		}
 	}
+	
+	public void remove(Department entity) {
+		
+		dao.deleteById( entity.getId() );
+		
+	}
 }
