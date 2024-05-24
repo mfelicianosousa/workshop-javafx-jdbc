@@ -16,6 +16,7 @@ public class SellerService {
 	}
 	
 	public void saveOrUpdate(Seller entity) {
+		
 		if (entity.getId() == null) {
 			
 			dao.insert(entity);

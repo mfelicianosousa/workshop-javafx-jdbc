@@ -99,8 +99,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewSeller.prefHeightProperty().bind(stage.heightProperty());
-		initEditButtons();
-		initRemoveButtons();
+		
 		
 	}
 
@@ -111,6 +110,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 		List<Seller> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewSeller.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
 	}
 	
 	private void createDialogForm(Seller entity, String absoluteName, Stage parentStage) {

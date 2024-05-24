@@ -1,9 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -89,7 +91,7 @@ public class SellerFormController implements Initializable {
 	private ObservableList<Department> obsList;
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
-		dataChangeListeners.add(listener);
+		dataChangeListeners.add( listener );
 	}
 
 	@FXML
@@ -104,12 +106,12 @@ public class SellerFormController implements Initializable {
 			entity = getFormData();
 
 			// save database;
-			sellerService.saveOrUpdate(entity);
+			sellerService.saveOrUpdate( entity );
 			// notificação
 			notifyDataChangeListeners();
-
 			// CloseWindow
 			Utils.currentStage(event).close();
+			
 		} catch (ValidationException e) {
 
 			setErrorMessages(e.getErrors());
@@ -135,15 +137,35 @@ public class SellerFormController implements Initializable {
 	private Seller getFormData() {
 
 		Seller entity = new Seller();
+		
 		ValidationException exception = new ValidationException("Validation error");
 
-		entity.setId(Utils.tryParseToInt(txtId.getText()));
+		entity.setId( Utils.tryParseToInt( txtId.getText() ));
 
-		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+		if ( txtName.getText() == null || txtName.getText().trim().equals("") ) {
 			exception.addErrors("name", "Field can't be empty");
 		}
-		entity.setName(txtName.getText());
+		entity.setName( txtName.getText() );
 
+		if ( txtEmail.getText() == null || txtEmail.getText().trim().equals("") ) {
+			exception.addErrors("email", "Field can't be empty");
+		}
+		entity.setEmail( txtEmail.getText() );
+		
+		if ( dtpBirthDate.getValue() == null ) {
+			exception.addErrors("birthDate", "Field can't be empty");		
+		} else {		
+            Instant instant = Instant.from(dtpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+            entity.setBirthDate(Date.from(instant));
+		}
+        if ( txtBaseSalary.getText() == null || 
+        		txtBaseSalary.getText().trim().equals("") ) {
+			exception.addErrors("baseSalary", "Field can't be empty");
+		}
+        entity.setBaseSalary( Utils.tryParseToDouble(txtBaseSalary.getText()) );
+        
+        entity.setDepartment(comboBoxDepartment.getValue());
+        
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
@@ -211,9 +233,11 @@ public class SellerFormController implements Initializable {
 
 		Set<String> fields = errors.keySet();
 
-		if (fields.contains("name")) {
-			lblErrorName.setText(errors.get("name"));
-		}
+		lblErrorName.setText(( fields.contains("name") ? errors.get("name") : ""));
+		lblErrorEmail.setText(( fields.contains("email") ? errors.get("email") : ""));
+		lblErrorBirthDate.setText(( fields.contains("birthDate") ? errors.get("birthDate") : ""));
+		lblErrorBaseSalary.setText(( fields.contains("baseSalary") ? errors.get("baseSalary") : ""));
+				
 	}
 
 	private void initializeComboBoxDepartment() {
