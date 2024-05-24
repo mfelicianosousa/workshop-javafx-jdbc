@@ -90,7 +90,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox prefHeight="31.0" prefWidth="357.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboBoxDepartment" prefHeight="31.0" prefWidth="357.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>

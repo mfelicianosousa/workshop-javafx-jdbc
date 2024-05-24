@@ -30,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerListController implements Initializable, DataChangeListener {
@@ -119,7 +120,8 @@ public class SellerListController implements Initializable, DataChangeListener {
             
             SellerFormController controller = loader.getController();
             controller.setSeller( entity );
-            controller.setSellerService(new SellerService()); // Manual Dependency injection
+            controller.setServices(new SellerService(), new DepartmentService()); // Manual Dependency injection
+            controller.LoadAssociatedObjects(); // Fill comboBox Department
             controller.subscribeDataChangeListener(this); // 
             controller.updateFormData();
             
@@ -134,7 +136,9 @@ public class SellerListController implements Initializable, DataChangeListener {
             
             
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IO Exception", "Error Loading view", e.getMessage(), AlertType.ERROR);
+			
 		}
 	}
 
@@ -144,9 +148,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 		updateTableView();
 		
 	}
-	
-	
-	
+		
 	private void initEditButtons() {
 		tableColumnEdit.setCellValueFactory(param-> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEdit.setCellFactory(param -> new TableCell<Seller, Seller>(){
