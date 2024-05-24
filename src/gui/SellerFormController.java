@@ -1,8 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -16,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Seller;
@@ -37,7 +41,25 @@ public class SellerFormController implements Initializable {
 	private TextField txtName;
 	
 	@FXML 
+	private TextField txtEmail;
+	
+	@FXML 
+	private DatePicker dtpBirthDate;
+	
+	@FXML 
+	private TextField txtBaseSalary;
+	
+	@FXML 
 	private Label lblErrorName;
+	
+	@FXML 
+	private Label lblErrorEmail;
+	
+	@FXML 
+	private Label lblErrorBirthDate;
+	
+	@FXML 
+	private Label lblErrorBaseSalary;
 	
 	@FXML 
 	private Button btnSave;
@@ -131,7 +153,10 @@ public class SellerFormController implements Initializable {
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
-		Constraints.SetTextFieldMaxLength(txtName, 30);
+		Constraints.SetTextFieldMaxLength(txtName, 50);
+		Constraints.SetTextFieldMaxLength(txtEmail, 60);
+		Constraints.SetTextFieldDouble(txtBaseSalary);
+		Utils.formatDatePicker(dtpBirthDate, "dd/MM/yyyy");
 	}
 	
 
@@ -141,6 +166,13 @@ public class SellerFormController implements Initializable {
 		}
 		txtId.setText(String.valueOf(entity.getId()));
 		txtName.setText(entity.getName());
+		txtEmail.setText(entity.getEmail());
+		Locale.setDefault(Locale.US);
+		txtBaseSalary.setText( String.format("%.2f",entity.getBaseSalary()));
+		txtName.setText(entity.getName());
+		if (entity.getBirthDate() != null) {
+		    dtpBirthDate.setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(),ZoneId.systemDefault()));
+		}
 	}
 
 	private void setErrorMessages( Map<String,String> errors) {
